@@ -4,8 +4,6 @@ PYTHON3=	python3
 DISTDIRS=	*.egg-info build dist
 TMPFILES=	K*.{dnskey,ds}
 
-KEYID=		Kjqmt7v Klajeyz
-
 
 all:
 
@@ -29,7 +27,7 @@ pip3:
 
 regress3_offline:
 	python -m py_compile csr2dnskey.py
-	for id in $(KEYID); do sh regress/regress.sh $$id; done
+	sh regress.sh
 
 clean:
 	rm -fr $(DISTDIRS)
