@@ -29,17 +29,7 @@ pip3:
 
 regress3_offline:
 	python -m py_compile csr2dnskey.py
-	for id in $(KEYID); do \
-		python csr2dnskey.py \
-			--csr regress/$$id.csr \
-			--output $$id.dnskey ;\
-		diff -u regress/$$id.dnskey $$id.dnskey ;\
-		python csr2dnskey.py \
-			--csr regress/$$id.csr \
-			--no-dnskey --ds \
-			--output $$id.ds  ;\
-		diff -u regress/$$id.ds $$id.ds ;\
-	done
+	for id in $(KEYID); do sh regress/regress.sh $$id; done
 
 clean:
 	rm -fr $(DISTDIRS)
