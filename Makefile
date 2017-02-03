@@ -4,7 +4,7 @@ PYTHON3=	python3
 DISTDIRS=	*.egg-info build dist
 TMPFILES=	K*.{dnskey,ds}
 
-KEYID=		Kjqmt7v
+KEYID=		Kjqmt7v Klajeyz
 
 
 all:
@@ -29,15 +29,17 @@ pip3:
 
 regress3_offline:
 	python -m py_compile csr2dnskey.py
-	python csr2dnskey.py \
-		--csr regress/$(KEYID).csr \
-		--output $(KEYID).dnskey
-	diff -u regress/$(KEYID).dnskey $(KEYID).dnskey
-	python csr2dnskey.py \
-		--csr regress/$(KEYID).csr \
-		--no-dnskey --ds \
-		--output $(KEYID).ds
-	diff -u regress/$(KEYID).ds $(KEYID).ds
+	for id in $(KEYID); do \
+		python csr2dnskey.py \
+			--csr regress/$$id.csr \
+			--output $$id.dnskey ;\
+		diff -u regress/$$id.dnskey $$id.dnskey ;\
+		python csr2dnskey.py \
+			--csr regress/$$id.csr \
+			--no-dnskey --ds \
+			--output $$id.ds  ;\
+		diff -u regress/$$id.ds $$id.ds ;\
+	done
 
 clean:
 	rm -fr $(DISTDIRS)
