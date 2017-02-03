@@ -1,5 +1,5 @@
 VENV3=		venv3
-PYTHON3=	python3.5
+PYTHON3=	python3
 
 DISTDIRS=	*.egg-info build dist
 TMPFILES=	K*.{dnskey,ds}
